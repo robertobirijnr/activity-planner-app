@@ -1,63 +1,6 @@
 <template>
   <div id="app">
-   <div id="vueGoalApp">
-        <nav class="navbar is-white topNav">
-            <div class="container">
-              <div class="navbar-brand">
-                <h1>Activity Planner</h1>
-                <h1>{{message}}</h1>
-              </div>
-            </div>
-          </nav>
-          <nav class="navbar is-white">
-            <div class="container">
-              <div class="navbar-menu">
-                <div class="navbar-start">
-                  <a class="navbar-item is-active" href="#">Newest</a>
-                  <a class="navbar-item" href="#">In Progress</a>
-                  <a class="navbar-item" href="#">Finished</a>
-                </div>
-              </div>
-            </div>
-          </nav>
-          <section class="container">
-            <div class="columns">
-              <div class="column is-3">
-                <button v-if="!isDisplayForm" class="button is-primary is-block is-alt is-large" @click="ShowHideForm" >New Activity</button>
-                <div v-if="isDisplayForm" class="create-form">
-                  <h2>Create Activity</h2>
-                <form action="">
-                  <div class="field">
-                    <div class="label">Title</div>
-                    <div class="control">
-                      <input type="text" v-model="Newactivity.title" class="input" placeholder="Read a Bok">
-                    </div>
-                  </div>
-                  <div class="field">
-                    <div class="label">Title</div>
-                    <div class="control">
-                      <textarea  class="textarea"  v-model="Newactivity.note" placeholder="add note"></textarea>
-                    </div>
-                  </div>
-                  <div class="field is-group">
-                    <div class="control">
-                      <div @click="createActivity" class="button is-link">Create</div>
-                      <button @click="ShowHideForm" class="button is-link">Cancel</button>
-                    </div>
-                   
-                  </div>
-                </form>
-                </div>
-              </div>
-              <div class="column is-9">
-                <div class="box content">
-                  
-                  <!-- <activity-item v-for="activity in activities" :key="activity.index" :activity="activity"></activity-item> -->
-                </div>  
-              </div>
-            </div>
-          </section>
-      </div>
+  
     <router-view/>
   </div>
 </template>
