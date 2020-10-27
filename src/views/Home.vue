@@ -21,7 +21,12 @@
                 </div>
                 <div v-else>
                   <div v-if="loading">Loading...</div>
-                  <ActivityItem  :activities="activities"></ActivityItem>
+                  <ActivityItem 
+                   v-for="activity in activities"
+                  :key="activity.id"
+                  :activity="activity"
+                  :categories="categories"/>
+                  <!-- <ActivityItem  :activities="activities"></ActivityItem> -->
                 </div>
                   <div v-if="!loading">
                     <div class="activity-length">Currently {{activityLength}} activities</div>

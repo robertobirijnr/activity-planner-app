@@ -1,6 +1,6 @@
 <template>
 <div>
-    <article v-for="activity in activities" :key="activity.index"  class="post">
+    <article class="post">
     <h4>{{activity.title}}</h4>
     <div class="media">
         <div class="media-left">
@@ -16,7 +16,8 @@
         </div>
         </div>
         <div class="media-right">
-        <span>Progress Bar Here</span>
+        <!-- <span>Progress: <span :class="'color-'+ activityProgress"> {{activity.progress}}%</span> </span> -->
+        <span>Progress: <span :style="{'color': activityProgress}"> {{activity.progress}}%</span> </span>
         </div>
     </div>
     </article>
@@ -26,10 +27,39 @@
 
 <script>
     export default {
-        props:['activities']
+        props:{
+            activity:{
+                type:Object,
+                required:true
+            }
+        },
+
+        computed:{
+              activityProgress() {
+                const progress = this.activity.progress
+                
+                if (progress <= 0){
+                    return 'red'
+                }
+                else if(progress <= 50){
+                    return 'orange'
+                }
+                else{
+                    return 'green'
+                }
+            }
+        }
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+    /* .color-red{
+        color:red
+    }
+    .color-orange{
+        color:orange
+    }
+    .color-green{
+        color:green
+    } */
 </style>
