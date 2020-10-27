@@ -22,7 +22,7 @@
           <section class="container">
             <div class="columns">
               <div class="column is-3">
-               <CreateActivity :categories="categories"/>
+               <CreateActivity @activityCreated="addActivity" :categories="categories"/>
               </div>
               <div class="column is-9">
                 <div class="box content">
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import ActivityItem from '@/components/ActivityItem'
 import CreateActivity from '@/components/CreateActivity'
 
@@ -79,7 +80,12 @@ export default {
    this.user = fetchUsers()
    this.categories = fetchCategories()
   },
-  
+  methods:{
+    addActivity(newActivity){
+      Vue.set(this.activities,newActivity.id,newActivity)
+      // this.activities[newActivity.id] = newActivity
+    }
+  }
    
 }
 </script>

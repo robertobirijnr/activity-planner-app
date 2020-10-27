@@ -27,8 +27,8 @@
         </div>
         <div class="field is-group">
         <div class="control">
-            <button @click="createActivity" :disabled="!isFormValid" class="button is-link">Create</button>
-            <button @click="ShowHideForm" class="button is-link">Cancel</button>
+            <button @click.prevent="createActivity" :disabled="!isFormValid" class="button is-link">Create</button>
+            <button @click.prevent="ShowHideForm" class="button is-link">Cancel</button>
         </div>
         
         </div>
@@ -38,7 +38,9 @@
 </template>
 
 <script>
+import {createActivityAPI}  from '@/api'
     export default {
+
         props:{
             categories:{
                 type:Object,
@@ -60,7 +62,12 @@
         this.isDisplayForm = !this.isDisplayForm
       },
       createActivity(){
-        alert(this.Newactivity)
+         createActivityAPI(this.Newactivity).then(
+             (activity)=>{
+                this.$emit('activityCreated', {...activity})
+             }
+         )
+        
       }
     },
     computed:{

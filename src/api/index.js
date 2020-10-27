@@ -23,6 +23,19 @@ export const fetchActivities = () =>{
 } 
 }
 
+const generateUid = () =>Math.floor(new Date() * Math.random())
+
+export const createActivityAPI = (activity)=>{
+    activity.id = generateUid()
+    activity.progress = 0
+    activity.createdAt = new Date()
+    activity.updatedAt = new Date()
+
+    return new Promise((resolve)=>{
+        resolve(activity)
+    })
+}
+
 export const fetchUsers = ()=>{
     return{
         name: 'Bob Alaska',
