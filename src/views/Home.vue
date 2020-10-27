@@ -3,7 +3,7 @@
         <nav class="navbar is-white topNav">
             <div class="container">
               <div class="navbar-brand">
-                <h1>Activity Planner</h1>
+                <h1>{{fullAppName}}</h1>
                 
               </div>
             </div>
@@ -38,9 +38,18 @@
                       <textarea  class="textarea"  v-model="Newactivity.note" placeholder="add note"></textarea>
                     </div>
                   </div>
+                  <div class="field">
+                    <div class="label">Title</div>
+                    <div class="control">
+                     <select v-model="Newactivity.category" class="select">
+                       <option disabled value="">Please select One</option>
+                       <option v-for="category in categories" :key="category.index">{{category.text}}</option>
+                     </select>
+                    </div>
+                  </div>
                   <div class="field is-group">
                     <div class="control">
-                      <div @click="createActivity" class="button is-link">Create</div>
+                      <button @click="createActivity" :disabled="!isFormValid" class="button is-link">Create</button>
                       <button @click="ShowHideForm" class="button is-link">Cancel</button>
                     </div>
                    
@@ -51,8 +60,8 @@
               <div class="column is-9">
                 <div class="box content">
                   <ActivityItem  :activities="activities"></ActivityItem>
-
-                  
+                  <div class="activity-length">Currently {{activityLength}} activities</div>
+                  <!-- <div class="activity-motivation">{{activitiesMotivation}}</div> -->
                 </div>  
               </div>
             </div>
@@ -62,34 +71,53 @@
 
 <script>
 import ActivityItem from '@/components/ActivityItem'
-import {fetchActivities} from '@/api'
+import {fetchActivities, fetchUsers,fetchCategories} from '@/api'
 export default {
   components:{
     ActivityItem
   },
   data() {
       return {
-          message:"Hello Bob",
-          items: {1: {name: 'Bob'}, 2: {name: 'Jeff'}},
-          user: {
-              name: 'Bob Alaska',
-              id: '-Aj34jknvncx98812',
-          },
-          activities: { },
-          categories: {
-              '1546969049': {text: 'books'},
-              '1546969225': {text: 'movies'}
-          },
+        appName:"Activity Planner",
+        creator:"Robert",
+          user: { },
+          activities: {},
+          categories: {},
           isDisplayForm:false,
           Newactivity:{
             title:"",
-            note:""
+            note:"",
+            category:""
           }
       }
   },
+  computed:{
+    isFormValid(){
+      return this.Newactivity.title && this.Newactivity.note
+    },
+    fullAppName(){
+      return this.appName  +  ' by ' + this.creator
+    },
+    activityLength(){
+      return Object.keys(this.activities).length
+    },
+    // activitiesMotivation(){
+    //    if(this.activitiesMotivation && this.activitiesMotivation < 5){
+    //      return "nice motivation"
+    //    }else if(this.activitiesMotivation && this.activitiesMotivation >= 5){
+    //      return "So many motivation"
+    //    }else{
+    //      return 'No activities, so sad :('
+    //    }
+    // }
+  },
+
   created(){
    this.activities = fetchActivities()
+   this.user = fetchUsers()
+   this.categories = fetchCategories()
   },
+  
    methods: {
       ShowHideForm(){
         this.isDisplayForm = !this.isDisplayForm
@@ -100,3 +128,12 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+  .activity-length{
+    display:inline-block
+  }
+  .activity-motivation{
+    float:right
+  }
+</style>
