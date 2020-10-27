@@ -28,7 +28,7 @@
                 <div class="box content">
                   <ActivityItem  :activities="activities"></ActivityItem>
                   <div class="activity-length">Currently {{activityLength}} activities</div>
-                  <!-- <div class="activity-motivation">{{activitiesMotivation}}</div> -->
+                  <div class="activity-motivation">{{activitiesMotivation}}</div>
                 </div>  
               </div>
             </div>
@@ -51,6 +51,8 @@ export default {
       return {
         appName:"Activity Planner",
         creator:"Robert",
+        loading:false,
+         error:"",
           user: { },
           activities: {},
           categories: {},
@@ -64,19 +66,26 @@ export default {
     activityLength(){
       return Object.keys(this.activities).length
     },
-    // activitiesMotivation(){
-    //    if(this.activitiesMotivation && this.activitiesMotivation < 5){
-    //      return "nice motivation"
-    //    }else if(this.activitiesMotivation && this.activitiesMotivation >= 5){
-    //      return "So many motivation"
-    //    }else{
-    //      return 'No activities, so sad :('
-    //    }
-    // }
+    activitiesMotivation(){
+       if(this.activityLength && this.activityLength < 5){
+         return "nice motivation"
+       }else if(this.activityLength && this.activityLength >= 5){
+         return "So many motivation"
+       }else{
+         return 'No activities, so sad :('
+       }
+    }
   },
 
   created(){
-   this.activities = fetchActivities()
+    this.loading = true
+    fetchActivities().then(activities =>{
+      this.activities = activities
+      this.loading = false
+    }).catch(err=>{
+      this.loading = false
+      this.error = err
+    })
    this.user = fetchUsers()
    this.categories = fetchCategories()
   },

@@ -57,24 +57,34 @@ import {createActivityAPI}  from '@/api'
           }
             }
         },
+        computed:{
+            isFormValid(){
+                return this.Newactivity.title && 
+                this.Newactivity.note && 
+                this.Newactivity.category
+            }
+        },
     methods: {
       ShowHideForm(){
         this.isDisplayForm = !this.isDisplayForm
       },
+      resetActivity(){
+          this.Newactivity.title ="",
+          this.Newactivity.note ="",
+          this.Newactivity.category =""
+      },
       createActivity(){
-         createActivityAPI(this.Newactivity).then(
+         createActivityAPI({...this.Newactivity}).then(
              (activity)=>{
+                 this.resetActivity()
+                 this.isDisplayForm = false
                 this.$emit('activityCreated', {...activity})
              }
          )
         
       }
     },
-    computed:{
-    isFormValid(){
-      return this.Newactivity.title && this.Newactivity.note
-    },
-    }
+    
     }
 </script>
 
