@@ -11,7 +11,7 @@
         <div class="media-content">
         <div class="content">
             <p>
-            <a href="#">Filip Jerga</a> updated {{activity.updatedAt}} minutes ago &nbsp;
+            <a href="#">Robert Obiri</a> updated {{activity.updatedAt}} minutes ago &nbsp;
             </p>
         </div>
         </div>

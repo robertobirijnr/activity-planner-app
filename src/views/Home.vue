@@ -3,32 +3,31 @@
         <nav class="navbar is-white topNav">
             <div class="container">
               <div class="navbar-brand">
-                <h1>{{fullAppName}}</h1>
-                
+                <h1>{{fullAppName}}</h1>       
               </div>
             </div>
           </nav>
-          <nav class="navbar is-white">
-            <div class="container">
-              <div class="navbar-menu">
-                <div class="navbar-start">
-                  <a class="navbar-item is-active" href="#">Newest</a>
-                  <a class="navbar-item" href="#">In Progress</a>
-                  <a class="navbar-item" href="#">Finished</a>
-                </div>
-              </div>
-            </div>
-          </nav>
+         <Navbar />
           <section class="container">
             <div class="columns">
               <div class="column is-3">
                <CreateActivity @activityCreated="addActivity" :categories="categories"/>
               </div>
               <div class="column is-9">
-                <div class="box content">
+                <div class="box content "
+                :class="{fetching:loading,' has-error':error}">
+                <div v-if="error">
+                  {{error}}
+                </div>
+                <div v-else>
+                  <div v-if="loading">Loading...</div>
                   <ActivityItem  :activities="activities"></ActivityItem>
-                  <div class="activity-length">Currently {{activityLength}} activities</div>
+                </div>
+                  <div v-if="!loading">
+                    <div class="activity-length">Currently {{activityLength}} activities</div>
                   <div class="activity-motivation">{{activitiesMotivation}}</div>
+                  </div>
+                  
                 </div>  
               </div>
             </div>
@@ -37,15 +36,17 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from 'vue' 
 import ActivityItem from '@/components/ActivityItem'
 import CreateActivity from '@/components/CreateActivity'
 
 import {fetchActivities, fetchUsers,fetchCategories} from '@/api'
+import Navbar from '@/components/Navbar'
 export default {
   components:{
     ActivityItem,
-    CreateActivity
+    CreateActivity,
+    Navbar 
   },
   data() {
       return {
@@ -105,5 +106,11 @@ export default {
   }
   .activity-motivation{
     float:right
+  }
+  .fetching{
+    border: 2px solid orange;
+  }
+  .has-error{
+    border:2px solid red
   }
 </style>
