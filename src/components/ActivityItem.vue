@@ -1,7 +1,9 @@
 <template>
 <div>
     <article class="post">
-    <h4>{{activity.title}}</h4>
+    <h4 class="title">{{activity.title}}</h4>
+    <p>{{categories[activity.category].text}}</p>
+    <p>{{activity.note}}</p>
     <div class="media">
         <div class="media-left">
         <p class="image is-32x32">
@@ -31,6 +33,10 @@
             activity:{
                 type:Object,
                 required:true
+            },
+            categories:{
+                type:Object,
+                required:true
             }
         },
 
@@ -53,6 +59,9 @@
 </script>
 
 <style  scoped>
+.title{
+    margin-bottom:5px
+    }
     /* .color-red{
         color:red
     }

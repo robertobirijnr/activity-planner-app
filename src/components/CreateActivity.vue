@@ -21,7 +21,7 @@
         <div class="control">
             <select v-model="Newactivity.category" class="select">
             <option disabled value="">Please select One</option>
-            <option v-for="category in categories" :key="category.index">{{category.text}}</option>
+            <option v-for="category in categories" :value="category.id" :key="category.index">{{category.text}}</option>
             </select>
         </div>
         </div>
