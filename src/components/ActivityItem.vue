@@ -2,7 +2,7 @@
 <div>
     <article class="post">
     <h4 class="title">{{activity.title}}</h4>
-    <p>{{categories[activity.category].text}}</p>
+    <p>{{capitalize(categories[activity.category].text)}}</p>
     <p>{{activity.note}}</p>
     <div class="media">
         <div class="media-left">
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import textUtility from "@/mixins/textUtility"
     export default {
         props:{
             activity:{
@@ -39,7 +40,7 @@
                 required:true
             }
         },
-
+        mixins:[textUtility],
         computed:{
               activityProgress() {
                 const progress = this.activity.progress
