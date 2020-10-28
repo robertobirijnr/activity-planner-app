@@ -13,7 +13,7 @@
         <div class="media-content">
         <div class="content">
             <p>
-            <a href="#">Robert Obiri</a> updated {{activity.updatedAt}} minutes ago &nbsp;
+            <a href="#">Robert Obiri</a> updated {{activity.updatedAt | timeformat}} &nbsp;
             </p>
         </div>
         </div>
