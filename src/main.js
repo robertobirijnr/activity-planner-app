@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import moment from 'moment'
 
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 Vue.config.productionTip = false
 
 Vue.filter('timeformat',function(timeStamp){

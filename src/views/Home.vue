@@ -25,7 +25,9 @@
                    v-for="activity in activities"
                   :key="activity.id"
                   :activity="activity"
-                  :categories="categories"/>
+                  :categories="categories"
+                  @activityDeleted="handleActivityDeleted"
+                  />
                   <!-- <ActivityItem  :activities="activities"></ActivityItem> -->
                 </div>
                   <div v-if="!loading">
@@ -45,7 +47,7 @@ import Vue from 'vue'
 import ActivityItem from '@/components/ActivityItem'
 import CreateActivity from '@/components/CreateActivity'
 
-import {fetchActivities, fetchUsers,fetchCategories} from '@/api'
+import {fetchActivities, fetchUsers,fetchCategories,deleteActivityAPI} from '@/api'
 import Navbar from '@/components/Navbar'
 export default {
   components:{
@@ -104,6 +106,12 @@ export default {
     addActivity(newActivity){
       Vue.set(this.activities,newActivity.id,newActivity)
       // this.activities[newActivity.id] = newActivity
+    },
+    handleActivityDeleted(activity){
+      deleteActivityAPI(activity)
+      .then(deleteactvity=>{
+        Vue.delete(this.activities, deleteactvity.id)
+      })
     }
   }
    

@@ -1,7 +1,10 @@
 <template>
 <div>
     <article class="post">
-    <h4 class="title">{{activity.title}}</h4>
+    <div class="activity-title-wrapper">
+        <h4 class="activity-title">{{activity.title}}</h4>
+        <i class="fas fa-cog activity-settings" @click="isMenuDisplay = !isMenuDisplay"></i>
+    </div>
     <p>{{capitalize(categories[activity.category].text)}}</p>
     <p>{{activity.note}}</p>
     <div class="media">
@@ -23,6 +26,10 @@
         </div>
     </div>
     </article>
+    <div v-if="isMenuDisplay" class="activity-control">
+        <a href="" class="button is-warning">Edit</a>
+        <a @click="handleDelet" class="button is-danger">Delete</a>
+    </div>
 </div>
     
 </template>
@@ -40,6 +47,11 @@ import textUtility from "@/mixins/textUtility"
                 required:true
             }
         },
+        data() {
+            return {
+                isMenuDisplay: false
+            }
+        },
         mixins:[textUtility],
         computed:{
               activityProgress() {
@@ -55,13 +67,45 @@ import textUtility from "@/mixins/textUtility"
                     return 'green'
                 }
             }
+        },
+        methods:{
+            handleDelet(){
+                this.$emit('activityDeleted',this.activity)
+            }
         }
     }
 </script>
 
-<style  scoped>
+<style   scoped>
 .title{
     margin-bottom:5px
+    }
+.activity-title{
+    margin-bottom:5px;
+    display:inline-block
+}    
+.activity-settings{
+    float:right;
+    font-size: 22px;
+
+    /* &:hover{
+        cursor:pointer;
+    } */
+}
+.activity-settings:hover{
+     cursor:pointer;
+}
+
+.activity-control{
+    margin:20px 0 0 0;
+
+    /* a{
+        margin-right: 5px;
+    } */
+}
+
+.activity-control a{
+        margin-right: 5px;
     }
     /* .color-red{
         color:red
