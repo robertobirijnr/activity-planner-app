@@ -1,5 +1,5 @@
 <template>
-   <div id="vueGoalApp">
+   <div  v-if="isDataloaded" id="vueGoalApp">
         <nav class="navbar is-white topNav">
             <div class="container">
               <div class="navbar-brand">
@@ -60,8 +60,8 @@ export default {
         loading:false,
          error:"",
           user: { },
-          activities: {},
-          categories: {},
+          activities: null,
+          categories: null,
          
       }
   },
@@ -80,6 +80,9 @@ export default {
        }else{
          return 'No activities, so sad :('
        }
+    },
+    isDataloaded(){
+      return this.categories && this.activities
     }
   },
 
@@ -93,7 +96,9 @@ export default {
       this.error = err
     })
    this.user = fetchUsers()
-   this.categories = fetchCategories()
+    fetchCategories().then(result =>{
+     this.categories = result
+   })
   },
   methods:{
     addActivity(newActivity){
